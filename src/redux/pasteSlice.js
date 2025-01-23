@@ -41,7 +41,22 @@ export const pasteSlice = createSlice({
       }
     },
 
-    // Function to reset all pastes
+      // Function to remove a paste by its ID
+    removeFromPaste: (state, action) => {
+      const pasteId = action.payload;
+    
+      // Filter out the paste with the given ID
+      const filteredPaste = state.paste.filter((item) => item._id !== pasteId);
+    
+      // Check if the paste was actually removed
+      if (state.paste.length !== filteredPaste.length) {
+        state.paste = filteredPaste;
+        localStorage.setItem("paste", JSON.stringify(state.paste));
+        toast.success("Paste deleted"); 
+      } else {
+        toast.error("Paste not found");
+      }
+    },
     resetAllPaste: (state) => {
       state.paste = [];
       localStorage.removeItem("paste");
@@ -49,23 +64,7 @@ export const pasteSlice = createSlice({
     },
 
     // Function to remove a paste by its ID
-    removeFromPaste: (state, action) => {
-      const pasteId = action.payload;
-
-      // Remove paste by ID and update localStorage
-      state.paste = state.paste.filter((item) => item._id !== pasteId);
-
-      // If the paste was removed, update localStorage
-      if (
-        state.paste.length !==
-        state.paste.filter((item) => item._id !== pasteId).length
-      ) {
-        localStorage.setItem("paste", JSON.stringify(state.paste));
-        toast.success("Paste deleted");
-      } else {
-        toast.error("Paste not found");
-      }
-    },
+  
   },
 });
 
