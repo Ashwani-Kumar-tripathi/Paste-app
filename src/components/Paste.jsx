@@ -19,20 +19,20 @@ const Paste = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-5xl mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-6 border-b-2 pb-2 border-gray-300">
         All Pastes
       </h1>
 
       <input
-        className="p-2 rounded-2xl w-full max-w-[600px] mx-auto block mt-5 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-2 rounded-2xl w-full max-w-xs sm:max-w-md mx-auto block mt-5 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         type="text"
         placeholder="Search pastes..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <div className="flex flex-col gap-5 mt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
         {filterData.length > 0 ? (
           filterData.map((paste) => (
             <div
@@ -42,8 +42,8 @@ const Paste = () => {
               <div className="text-lg font-semibold border-b pb-2 mb-2">
                 {paste.title}
               </div>
-              <div className="text-sm text-gray-600 border p-2 rounded-lg bg-gray-50">
-                {paste.content}
+              <div className="text-sm text-gray-600 border p-2 rounded-lg bg-gray-50 h-24 overflow-y-auto">
+                {paste?.content ? paste.content : "No content available"}
               </div>
 
               <div className="text-xs text-gray-500 mt-2">
@@ -53,72 +53,26 @@ const Paste = () => {
                 </span>
               </div>
 
-              <div className="flex flex-row gap-4 justify-evenly mt-4">
-                <button>
-                  <NavLink
-                    to={`/?pasteId=${paste?._id}`}
-                    className="flex items-center space-x-2 text-indigo-600 hover:text-white bg-transparent hover:bg-indigo-600 border-2 border-indigo-600 rounded-full py-2 px-4 transition-all duration-200"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.232 5.232a3 3 0 114.243 4.243L7.707 17H4v-3.707L14.768 5.232z"
-                      />
-                    </svg>
-                    <span>Edit</span>
-                  </NavLink>
-                </button>
+              <div className="flex flex-wrap gap-3 justify-center mt-4">
+                <NavLink
+                  to={`/?pasteId=${paste?._id}`}
+                  className="flex items-center space-x-2 text-indigo-600 hover:text-white bg-transparent hover:bg-indigo-600 border-2 border-indigo-600 rounded-full py-2 px-4 transition-all duration-200 w-full sm:w-auto"
+                >
+                  ✏️ Edit
+                </NavLink>
 
-                <button>
-                  <NavLink
-                    to={`/paste/${paste?._id}`}
-                    className="flex items-center space-x-2 text-green-600 hover:text-white bg-transparent hover:bg-green-600 border-2 border-green-600 rounded-full py-2 px-4 transition-all duration-200"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-5 h-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 12c0 3.333-2.667 6-6 6s-6-2.667-6-6 2.667-6 6-6 6 2.667 6 6zm1.828-3.172c-2.335-2.334-5.561-3.828-9.172-3.828-3.61 0-6.837 1.494-9.172 3.828a1 1 0 000 1.414C3.163 9.12 6.391 7.625 10 7.625c3.609 0 6.837 1.495 9.172 3.828a1 1 0 000-1.414z"
-                      />
-                    </svg>
-                    View
-                  </NavLink>
-                </button>
+                <NavLink
+                  to={`/paste/${paste?._id}`}
+                  className="flex items-center space-x-2 text-green-600 hover:text-white bg-transparent hover:bg-green-600 border-2 border-green-600 rounded-full py-2 px-4 transition-all duration-200 w-full sm:w-auto"
+                >
+                  👁️ View
+                </NavLink>
 
                 <button
                   onClick={() => handleDelete(paste?._id)}
-                  className="flex items-center space-x-2 text-red-600 hover:text-white bg-transparent hover:bg-red-600 border-2 border-red-600 rounded-full py-2 px-4 transition-all duration-200"
+                  className="flex items-center space-x-2 text-red-600 hover:text-white bg-transparent hover:bg-red-600 border-2 border-red-600 rounded-full py-2 px-4 transition-all duration-200 w-full sm:w-auto"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                  <span>Delete</span>
+                  ❌ Delete
                 </button>
 
                 <button
@@ -126,23 +80,9 @@ const Paste = () => {
                     navigator.clipboard.writeText(paste?.content);
                     toast.success("Copied to clipboard");
                   }}
-                  className="flex items-center space-x-2 text-blue-600 hover:text-white bg-transparent hover:bg-blue-600 border-2 border-blue-600 rounded-full py-2 px-4 transition-all duration-200"
+                  className="flex items-center space-x-2 text-blue-600 hover:text-white bg-transparent hover:bg-blue-600 border-2 border-blue-600 rounded-full py-2 px-4 transition-all duration-200 w-full sm:w-auto"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12H6v3h3V12zM9 6H6v3H9V6zm3 9h6v3h-6v-3zm0-6h6V6h-6v3z"
-                    />
-                  </svg>
-                  <span>Copy</span>
+                  📋 Copy
                 </button>
 
                 <button
@@ -167,23 +107,9 @@ const Paste = () => {
                         );
                     }
                   }}
-                  className="flex items-center space-x-2 text-teal-600 hover:text-white bg-transparent hover:bg-teal-600 border-2 border-teal-600 rounded-full py-2 px-4 transition-all duration-200"
+                  className="flex items-center space-x-2 text-teal-600 hover:text-white bg-transparent hover:bg-teal-600 border-2 border-teal-600 rounded-full py-2 px-4 transition-all duration-200 w-full sm:w-auto"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17 8l4 4-4 4m0-8l-4 4-4-4m4 4H3"
-                    />
-                  </svg>
-                  <span>Share</span>
+                  🔗 Share
                 </button>
               </div>
             </div>
