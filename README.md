@@ -1,13 +1,27 @@
-<<<<<<< HEAD
-# React + Vite
+# Paste-App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple web application built with React and Redux Toolkit that allows users to store, edit, delete, and manage code snippets or notes using local storage.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-=======
-# Paste-app
-app to store codes on localstorage using react and rtk
->>>>>>> d2812f36e8aa77f5507ff7d9677b05908d137bcd
+- Create and save code snippets locally
+- Edit existing snippets
+- Delete saved snippets
+- Copy snippets to the clipboard
+- View and manage saved pastes
+- Persistent storage using LocalStorage
+- Responsive UI with Tailwind CSS
+
+## Tech Stack
+
+- **Frontend:** React, JavaScript, Tailwind CSS  
+- **State Management:** Redux Toolkit (RTK)  
+- **Routing:** React Router  
+- **Storage:** LocalStorage  
+
+## Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Ashwani-Kumar-tripathi/pasteapp.git
+   cd pasteapp
